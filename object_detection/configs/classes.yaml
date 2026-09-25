@@ -1,0 +1,11 @@
+# Object classes for HMS NEMO perception system
+# Class IDs must remain consistent with dataset annotations.
+
+names:
+  0: red_buoy
+  1: green_buoy
+  2: cardinal_north
+  3: cardinal_south
+  4: cardinal_east
+  5: cardinal_west
+  6: vessel

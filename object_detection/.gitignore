@@ -13,3 +13,6 @@ __pycache__/
 
 # Local datasets
 data/
+
+# Ultralytics training outputs
+../runs/
