@@ -1,37 +1,36 @@
 import cv2
 
+from src.camera import Camera
+
 
 def main():
-    camera = cv2.VideoCapture(1)
+    camera = Camera(camera_index=1)
 
-    if not camera.isOpened():
-        print("ERROR: Could not open camera.")
-        return
+    try:
+        camera.open()
+        print("Camera opened.")
+        print("Press Q to quit.")
 
-    print("Camera opened.")
-    print(
-        f"Resolution: "
-        f"{int(camera.get(cv2.CAP_PROP_FRAME_WIDTH))} x "
-        f"{int(camera.get(cv2.CAP_PROP_FRAME_HEIGHT))}"
-    )
-    print(f"FPS: {camera.get(cv2.CAP_PROP_FPS)}")
-    print("Press Q to quit.")
+        while True:
+            frame = camera.read()
 
-    while True:
-        success, frame = camera.read()
+            # Smaller image for display only
+            display_frame = cv2.resize(
+                frame,
+                (960, 480)
+            )
 
-        if not success:
-            print("ERROR: Could not read frame.")
-            break
+            cv2.imshow(
+                "HMS NEMO - THETA X",
+                display_frame
+            )
 
-        display_frame = cv2.resize(frame, (960, 480))
-        cv2.imshow("HMS NEMO - THETA X", display_frame)
+            if cv2.waitKey(1) & 0xFF == ord("q"):
+                break
 
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            break
-
-    camera.release()
-    cv2.destroyAllWindows()
+    finally:
+        camera.release()
+        cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":

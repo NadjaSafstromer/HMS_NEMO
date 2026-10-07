@@ -1,7 +1,7 @@
-from pathlib import Path
 from typing import List
 import time
 
+import numpy as np
 from ultralytics import YOLO
 
 from src.detector import Detector
@@ -13,17 +13,20 @@ class YOLODetector(Detector):
     Object detector using an Ultralytics YOLO model.
     """
 
-    def __init__(self, model_path: str, confidence_threshold: float = 0.5):
+    def __init__(
+        self,
+        model_path: str,
+        confidence_threshold: float = 0.5
+    ):
         self.model = YOLO(model_path)
         self.confidence_threshold = confidence_threshold
 
-    def detect(self, image_path: Path) -> List[DetectedObject]:
+    def detect(self, frame: np.ndarray) -> List[DetectedObject]:
         """
-        Run object detection on one image.
+        Run object detection on one camera frame.
         """
-
         results = self.model(
-            str(image_path),
+            frame,
             conf=self.confidence_threshold,
             verbose=False
         )
@@ -33,7 +36,6 @@ class YOLODetector(Detector):
 
         for result in results:
             for box in result.boxes:
-
                 class_id = int(box.cls.item())
                 confidence = float(box.conf.item())
 
@@ -53,3 +55,18 @@ class YOLODetector(Detector):
                 detections.append(detection)
 
         return detections
+
+    def detect_image(self, image_path: str) -> List[DetectedObject]:
+        """
+        Load an image from disk and run object detection.
+        """
+        import cv2
+
+        frame = cv2.imread(image_path)
+
+        if frame is None:
+            raise ValueError(
+                f"Could not load image: {image_path}"
+            )
+
+        return self.detect(frame)

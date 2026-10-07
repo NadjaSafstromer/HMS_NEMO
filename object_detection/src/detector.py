@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from pathlib import Path
 from typing import List
+
+import numpy as np
 
 from src.detected_object import DetectedObject
 
@@ -8,19 +9,11 @@ from src.detected_object import DetectedObject
 class Detector(ABC):
     """
     Base interface for object detectors used in HMS NEMO.
-
-    A detector receives an image and returns detected objects.
     """
 
     @abstractmethod
-    def detect(self, image_path: Path) -> List[DetectedObject]:
+    def detect(self, frame: np.ndarray) -> List[DetectedObject]:
         """
-        Detect objects in an image.
-
-        Args:
-            image_path: Path to the input image.
-
-        Returns:
-            List of detected objects.
+        Detect objects in an image frame and return the detections.
         """
         pass
