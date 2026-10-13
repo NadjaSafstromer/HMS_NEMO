@@ -8,7 +8,7 @@ def main():
     camera = Camera(camera_index=1)
 
     detector = YOLODetector(
-        model_path="../runs/detect/red_buoy_v1/weights/best.pt",
+        model_path="models/buoy_red_green_v1.pt",
         confidence_threshold=0.5
     )
 

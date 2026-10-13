@@ -1,0 +1,5 @@
+runs/
+.venv/
+__pycache__/
+*.pyc
+!models/buoy_red_green_v1.pt

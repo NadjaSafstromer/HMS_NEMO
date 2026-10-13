@@ -16,3 +16,6 @@ data/
 
 # Ultralytics training outputs
 ../runs/
+
+# Keep our trained buoy detection model
+!models/buoy_red_green_v1.pt

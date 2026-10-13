@@ -4,5 +4,5 @@ train: images/train
 val: images/val
 
 names:
-  0: red_buoy
-  1: green_buoy
+  0: green_buoy
+  1: red_buoy
